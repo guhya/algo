@@ -96,6 +96,28 @@ public class TheTrie {
 		suggest(this.root, keyword);
 	}
 	
+	public static String findLongest(TrieNode root, String str, String tmp, String result) {
+		if (str == null) return "";
+		
+		int len = str.length();
+		if (len == 0) {
+			return result;
+		}
+		
+		int c = str.charAt(0) - 'a';
+		if (root.children[c] == null) {
+			return result;
+		}
+		
+		if (root.children[c].isEnd) {
+			return findLongest(root.children[c], str.substring(1), tmp + str.charAt(0), tmp + str.charAt(0));
+		} else {
+			return findLongest(root.children[c], str.substring(1), tmp + str.charAt(0), result);
+		}
+		
+	}
+	
+	
 	public static void main(String[] args) {
 		TheTrie trie = new TheTrie();
 		trie.insert(trie.root, "p");
@@ -107,6 +129,7 @@ public class TheTrie {
 		trie.insert(trie.root, "sparkling");
 		trie.insert(trie.root, "span");
 		trie.insert(trie.root, "spandex");
+		trie.insert(trie.root, "spandexios");
 		trie.insert(trie.root, "spaniard");
 		trie.insert(trie.root, "spanish");
 		
@@ -116,6 +139,11 @@ public class TheTrie {
 		
 		System.out.println("++++++++++++++");
 		trie.suggest("pand");
+		System.out.println("++++++++++++++");
+		
+		String word = "spanderaxionosaurus";
+		System.out.println(findLongest(trie.root, word, "", ""));
+		
 	}
 
 }
