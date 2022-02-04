@@ -2,11 +2,14 @@ package net.guhya.algo.linkedlist;
 
 import java.util.HashSet;
 
+import net.guhya.algo.btree.Tree;
+import net.guhya.algo.btree.TreeNode;
+
 public class TheList {
 	
 	public Node head;
 	
-	public class Node {
+	public static class Node {
 		
 		Node next;
 		int data;
@@ -148,9 +151,7 @@ public class TheList {
 		return false;
 	}
 	
-
-	public static void main(String[] args) {
-		
+	public static void util( ) {
 		TheList tl = new TheList();
 		tl.insert(5);
 		tl.append(6);
@@ -169,7 +170,69 @@ public class TheList {
 		tl.head.next.next.next.next = branch;		
 		
 		if (!tl.isLoop(tl.head)) tl.traverse(tl.head);
-		
 	}
+
+	private static Node findMid(Node head, Node tail) {
+		Node fast = head;
+		Node slow = head;
+		while (fast != null && fast.next != null) {
+			if (fast == tail || fast.next == tail) break;
+			slow = slow.next;
+			fast = fast.next.next;
+		}
+		
+		return slow;
+	}
+
+	private static Node findBeforeTail(Node head, Node tail) {
+		Node current = head;
+		while (current != null && current != tail && current.next != tail) {
+			current = current.next;
+		}
+		
+		return current;
+	}
+	
+	
+	private static TreeNode constructBstFromList(Node head, Node tail, Node afterTail) {
+		
+		if (head == afterTail) {
+			return null;
+		}
+		
+		Node mid = findMid(head, tail);
+		TreeNode node = new TreeNode(String.valueOf(mid.data));
+		
+		Node leftHead = head;
+		Node leftTail = findBeforeTail(head, mid);
+		Node afterLeftTail = mid;
+		
+		Node rightHead = mid.next;
+		Node rightTail = tail;
+		Node afterRightTail = rightTail == null ? null : rightTail.next;
+		
+		node.left = constructBstFromList(leftHead, leftTail, afterLeftTail);
+		node.right = constructBstFromList(rightHead, rightTail, afterRightTail);
+
+		return node;
+	}
+	
+	public static void main(String[] args) {
+		TheList tl = new TheList();
+		tl.append(1);
+		tl.append(2);
+		tl.append(3);
+		tl.append(4);
+		tl.append(5);
+		tl.append(6);
+		tl.append(7);
+		
+		tl.traverse(tl.head);
+		
+		Node tail = findBeforeTail(tl.head, null);
+		TreeNode root = constructBstFromList(tl.head, tail, null);
+		Tree.toArray(root);
+	}
+	
 
 }

@@ -3,6 +3,7 @@ package net.guhya.algo.stack;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 public class NextGreaterElement {
 	
@@ -109,6 +110,42 @@ public class NextGreaterElement {
 		System.out.println(Arrays.toString(nge));
 	}
 
+    public static int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        int len = nums1.length;
+        int[] result = new int[len];
+        int[] temp = new int[nums2.length];
+        Map<Integer, Integer> indexMap = new HashMap<>();
+        for (int i=0; i<nums2.length; i++) {
+        	indexMap.put(nums2[i], i);
+        }
+        
+        Stack<Integer> s = new Stack<>();
+        for (int i=0; i<nums2.length; i++) {
+        	if (s.isEmpty()) {
+        		s.add(nums2[i]);
+        	} else {
+        		while (!s.isEmpty()) {
+	        		if (nums2[i] > s.peek()) {
+	        			System.out.println(s.peek() + " -> " + nums2[i]);
+	        			temp[indexMap.get(s.pop())] = nums2[i];
+	        		} else {
+	        			break;
+	        		}
+        		}
+    			s.add(nums2[i]);
+        	}
+        }
+        while (!s.isEmpty()) {
+        	temp[indexMap.get(s.pop())] = -1;
+        }
+        
+        for (int i=0; i<nums1.length; i++) {
+        	result[i] = temp[indexMap.get(nums1[i])];
+        }
+        
+        return result;
+    }	
+	
 	public static void main(String[] args) {
 		TheStack ts = new TheStack(4);
 		ts.push(4);
@@ -128,6 +165,11 @@ public class NextGreaterElement {
 		
 		int[] arrFrequency2 = {1, 1, 1, 2, 2, 2, 2, 11, 3, 3};
 		printNextGreaterFrequency(arrFrequency2);
+		
+		int[] nums1 = {4, 1, 2};
+		int[] nums2 = {1, 3, 4, 2};
+		
+		System.out.println(Arrays.toString(nextGreaterElement(nums1, nums2)));
 	}
 
 }

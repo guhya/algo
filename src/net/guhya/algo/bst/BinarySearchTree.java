@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import net.guhya.algo.btree.TreeNode;
+
 public class BinarySearchTree {
 
 	public Node root;
@@ -70,6 +72,14 @@ public class BinarySearchTree {
 		traverseInOrder(root.right, nodeList);
 	}
 	
+	public static void preorder(Node root) {
+		if (root == null) return;
+		
+		System.out.print(root.data + ", ");
+		preorder(root.left);
+		preorder(root.right);
+	}
+
 	
 	public static void main(String[] args) {
 		BinarySearchTree bst = new BinarySearchTree();
@@ -83,10 +93,13 @@ public class BinarySearchTree {
 		bst.insert(bst.root, 7);
 		bst.insert(bst.root, 13);
 		
+		preorder(bst.root);
+		
 		bst.traverse();
 		List<Node> nodeList = new ArrayList<>();
 		bst.traverseInOrder(bst.root, nodeList);
 		System.out.println(nodeList);
+		
 		
 	}
 
