@@ -183,10 +183,12 @@ public class Graph {
 	}
 	
 	
-	private static boolean isVisitable(int[][] g, int[] current, int[] xy, int[][] visited) {
+	private static boolean isVisitable(int[][] g, int[] current, int[] next, int[][] visited) {
 		boolean r = false;
-		r = visited[xy[0]][xy[1]] == 0;
-		if (r) r = g[xy[0]][xy[1]] <= g[current[0]][current[1]];
+		r = visited[next[0]][next[1]] == 0;
+		if (r) r = g[next[0]][next[1]] <= g[current[0]][current[1]];
+		if (r) r = next[0] >= 0 && next[0] <= g.length - 1;
+		if (r) r = next[1] >= 0 && next[1] <= g[0].length - 1;
 		
 		return r;
 	}
