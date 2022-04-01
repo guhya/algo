@@ -13,8 +13,21 @@ public class Scheduler {
 	
 	public void printJobList() {
 		for (Job job : jobList) {
-			System.out.println(job);
+			System.out.println(job.toPrettyString());
 		}
+	}
+	
+	private boolean isCyclicUtil() {
+		return false;
+	}
+	
+	private boolean isCyclic() {
+		List<List<Job>> depGraph = new ArrayList<>();
+		for (Job job : jobList) {
+			depGraph.add(job.getDependencies());
+		}
+		
+		return false;
 	}
 	
 	public static void main(String[] args) {
@@ -22,6 +35,10 @@ public class Scheduler {
 		Job job1 = new Job(1, 2, true);
 		Job job2 = new Job(2, 1, false);
 		Job job3 = new Job(3, 1, true);
+		job2.addDependency(job0);
+		job2.addDependency(job1);
+		job3.addDependency(job0);
+		job3.addDependency(job2);
 		
 		Scheduler sch = new Scheduler();
 		sch.addJob(job0);
@@ -30,5 +47,6 @@ public class Scheduler {
 		sch.addJob(job3);
 		
 		sch.printJobList();
+		sch.isCyclic();
 	}
 }

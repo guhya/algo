@@ -48,13 +48,20 @@ public class Job {
 	public void setDependencies(List<Job> dependencies) {
 		this.dependencies = dependencies;
 	}
+	public void addDependency(Job job) {
+		this.dependencies.add(job);
+	}
 	
 	public String toString() {
+		return String.valueOf(id);
+	}
+
+	public String toPrettyString() {
 		String dep = "";
 		for (Job job : dependencies) {
 			dep += job.id + " ";
 		}
-		return id+"\t| "+duration+" \t| "+success+"\t\t| ["+dep+"]";
+		return id+"\t| "+duration+" \t| "+success+"\t\t| [ "+dep+"]";
 	}
 
 }
