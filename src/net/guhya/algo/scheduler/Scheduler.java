@@ -1,11 +1,23 @@
 package net.guhya.algo.scheduler;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Scheduler {
 	
-	private List<Job> jobList = new ArrayList<>();
+	private List<Job> jobList 					= new ArrayList<>();
+	private LinkedBlockingQueue<Job> jobQueue 	= new LinkedBlockingQueue<>();
+	static List<Job> completedJobList 			= Collections.synchronizedList(new ArrayList<>());
+	static List<Job> failedJobList 				= Collections.synchronizedList(new ArrayList<>());
+	static List<Job> skippedJobList 			= Collections.synchronizedList(new ArrayList<>());
 	
 	public void addJob(Job job) {
 		jobList.add(job);
@@ -17,20 +29,120 @@ public class Scheduler {
 		}
 	}
 	
-	private boolean isCyclicUtil() {
-		return false;
+	private boolean queueJob() {
+		int[] inDegree = new int[jobList.size()];
+		for (int i=0; i<jobList.size(); i++) {
+			inDegree[i] = jobList.get(i).getDependencies().size();
+		}
+		
+		LinkedList<Job> q = new LinkedList<>();
+		for (int i=0; i<inDegree.length; i++) {
+			if (inDegree[i] == 0) q.add(jobList.get(i));
+		}
+		
+		while (!q.isEmpty()) {
+			Job j = q.removeFirst();
+			jobQueue.add(j);
+			for (int i=0; i<jobList.size(); i++) {
+				if (jobList.get(i).getDependencies().contains(j)) {
+					inDegree[i]--;
+					if (inDegree[i] == 0) {
+						q.add(jobList.get(i));
+					}
+				}
+			}
+		}
+		
+		return jobQueue.size() == jobList.size();
 	}
 	
-	private boolean isCyclic() {
-		List<List<Job>> depGraph = new ArrayList<>();
-		for (Job job : jobList) {
-			depGraph.add(job.getDependencies());
+	public List<Job> getJobList() {
+		return jobList;
+	}
+
+	public void setJobList(List<Job> jobList) {
+		this.jobList = jobList;
+	}
+
+	public LinkedBlockingQueue<Job> getJobQueue() {
+		return jobQueue;
+	}
+	
+	public void run() throws InterruptedException, ExecutionException {
+		this.printJobList();
+		if (!this.queueJob()) {
+			System.out.println("cyclic dependencies: true");
+		} else {
+			final int POOL_SIZE = 3;
+			ExecutorService pool = Executors.newFixedThreadPool(POOL_SIZE);
+			while (!this.jobQueue.isEmpty()) {
+				Callable<Boolean> job = this.jobQueue.poll();
+				Job theJob = (Job) job;
+				if (!isSkipped(theJob)) {
+					Future<Boolean> future = pool.submit(job);
+					if (future.get()) {
+						completedJobList.add(theJob);
+					} else {
+						failedJobList.add(theJob);
+					}
+				} else {
+					skippedJobList.add(theJob);
+				}
+			}
+			System.out.println("output:");
+			System.out.println("completed jobs: " + completedJobList);
+			System.out.println("failed jobs: " + failedJobList);
+			System.out.println("skipped jobs: " + skippedJobList);
+		}
+	}
+	
+	private boolean isReady(Job job) {
+		for (Job dep : job.getDependencies()) {
+			if (!completedJobList.contains(dep)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+
+	private boolean isSkipped(Job job) {
+		for (Job dep : job.getDependencies()) {
+			if (failedJobList.contains(dep) || skippedJobList.contains(dep)) {
+				return true;
+			}
 		}
 		
 		return false;
 	}
-	
+
 	public static void main(String[] args) {
+		/*
+		Job job0 = new Job(0, 1, true);
+		Job job1 = new Job(1, 2, true);
+		Job job2 = new Job(2, 1, false);
+		Job job3 = new Job(3, 1, true);
+		Job job4 = new Job(4, 1, true);
+		Job job5 = new Job(5, 1, false);
+		Job job6 = new Job(6, 1, true);
+		Job job7 = new Job(7, 1, true);
+		job2.addDependency(job1);
+		job3.addDependency(job2);
+		job4.addDependency(job1);
+		job4.addDependency(job5);
+		job6.addDependency(job5);
+		job7.addDependency(job6);
+		
+		Scheduler sch = new Scheduler();
+		sch.addJob(job0);
+		sch.addJob(job1);
+		sch.addJob(job2);
+		sch.addJob(job3);
+		sch.addJob(job4);
+		sch.addJob(job5);
+		sch.addJob(job6);
+		sch.addJob(job7);
+		*/
 		Job job0 = new Job(0, 1, true);
 		Job job1 = new Job(1, 2, true);
 		Job job2 = new Job(2, 1, false);
@@ -39,14 +151,18 @@ public class Scheduler {
 		job2.addDependency(job1);
 		job3.addDependency(job0);
 		job3.addDependency(job2);
-		
 		Scheduler sch = new Scheduler();
 		sch.addJob(job0);
 		sch.addJob(job1);
 		sch.addJob(job2);
 		sch.addJob(job3);
 		
-		sch.printJobList();
-		sch.isCyclic();
+		try {
+			sch.run();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
 	}
 }

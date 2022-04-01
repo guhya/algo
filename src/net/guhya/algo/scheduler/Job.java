@@ -1,23 +1,24 @@
 package net.guhya.algo.scheduler;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.Callable;
 
-public class Job {
+public class Job implements Callable<Boolean> {
 	
 	private int id;
 	private int duration;
 	private boolean success;
-	private List<Job> dependencies;
+	private Set<Job> dependencies;
 	
 	public Job(int id, int duration, boolean success) {
 		this.id = id;
 		this.duration = duration;
 		this.success = success;
-		this.dependencies = new ArrayList<Job>();
+		this.dependencies = new HashSet<Job>();
 	}
 	
-	public Job(int id, int duration, boolean success, List<Job> dependencies) {
+	public Job(int id, int duration, boolean success, Set<Job> dependencies) {
 		this.id = id;
 		this.duration = duration;
 		this.success = success;
@@ -42,10 +43,10 @@ public class Job {
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
-	public List<Job> getDependencies() {
+	public Set<Job> getDependencies() {
 		return dependencies;
 	}
-	public void setDependencies(List<Job> dependencies) {
+	public void setDependencies(Set<Job> dependencies) {
 		this.dependencies = dependencies;
 	}
 	public void addDependency(Job job) {
@@ -62,6 +63,18 @@ public class Job {
 			dep += job.id + " ";
 		}
 		return id+"\t| "+duration+" \t| "+success+"\t\t| [ "+dep+"]";
+	}
+
+	@Override
+	public Boolean call() throws Exception {
+		try {
+			Thread.sleep(duration * 1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return success;
 	}
 
 }
