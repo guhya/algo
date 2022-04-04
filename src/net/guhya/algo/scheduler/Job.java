@@ -2,14 +2,15 @@ package net.guhya.algo.scheduler;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
 
-public class Job implements Callable<Boolean> {
+public class Job implements Runnable {
 	
 	private int id;
 	private int duration;
 	private boolean success;
 	private Set<Job> dependencies;
+	private CountDownLatch latch;
 	
 	public Job(int id, int duration, boolean success) {
 		this.id = id;
@@ -64,17 +65,42 @@ public class Job implements Callable<Boolean> {
 		}
 		return id+"\t| "+duration+" \t| "+success+"\t\t| [ "+dep+"]";
 	}
+	
+	public void setLatch(CountDownLatch latch) {
+		this.latch = latch;
+	}
 
 	@Override
-	public Boolean call() throws Exception {
+	public void run() {
 		try {
 			Thread.sleep(duration * 1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-			return false;
+		} finally {
+			if (latch != null) this.latch.countDown();
 		}
-		
-		return success;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Job other = (Job) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 
 }
