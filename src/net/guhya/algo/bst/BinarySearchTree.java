@@ -37,6 +37,8 @@ public class BinarySearchTree {
 		else
 			current.right = insert(current.right, value);
 		
+		System.out.println(current);
+		
 		return current;
 	}
 	
@@ -84,14 +86,24 @@ public class BinarySearchTree {
 	public static void main(String[] args) {
 		BinarySearchTree bst = new BinarySearchTree();
 		bst.root = new Node(8);
+		System.out.println("++");
 		bst.insert(bst.root, 3);
+		System.out.println("++");
 		bst.insert(bst.root, 10);
+		System.out.println("++");
 		bst.insert(bst.root, 1);
+		System.out.println("++");
 		bst.insert(bst.root, 6);
+		System.out.println("++");
 		bst.insert(bst.root, 14);
+		System.out.println("++");
 		bst.insert(bst.root, 4);
+		System.out.println("++");
 		bst.insert(bst.root, 7);
+		System.out.println("++");
 		bst.insert(bst.root, 13);
+		
+		System.out.println("++++++++++");
 		
 		preorder(bst.root);
 		
