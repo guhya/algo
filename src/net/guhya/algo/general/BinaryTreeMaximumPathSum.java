@@ -6,6 +6,12 @@ import net.guhya.algo.btree.TreeFromArray.TreeNode;
 public class BinaryTreeMaximumPathSum {
 
 	static int maxSum = Integer.MIN_VALUE;
+	
+	/**
+	 * Remember, operation on a tree is the result of any operation done to its sub tree
+	 * @param root
+	 * @return
+	 */
     static int maxPathSumUtil(TreeNode root) {
         if (root == null) return 0;
         

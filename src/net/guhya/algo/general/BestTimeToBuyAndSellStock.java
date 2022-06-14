@@ -2,6 +2,16 @@ package net.guhya.algo.general;
 
 public class BestTimeToBuyAndSellStock {
 
+    /**
+     * Operation :
+     *              - Slide window, moving both lo and hi
+     *              - Expand window, only moving hi
+     * Sliding window, our initial window is at index 0 (lo) and 1 (hi).
+     * We slide the window to the right if price at hi is lower than the price at lo.
+     * If price at hi is higher or equals, we expand our window and calculate profit.
+     * @param prices
+     * @return
+     */
     public static int maxProfit(int[] prices) {
     	if (prices.length == 1) return 0;
     	int lo = 0, hi = 1;

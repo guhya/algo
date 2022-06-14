@@ -8,6 +8,16 @@ import java.util.Map;
 
 public class GroupAnagrams {
 	
+    /**
+     * Comparing anagram one by one using hashmap of character counter
+     * We increment counter first, and substract it later
+     * In the end if hashmap is empty, then it is anagram
+     * Time complexity O(m+n)
+     * Space complexity O(m+n)
+     * @param s1
+     * @param s2
+     * @return
+     */
 	public static boolean isAnagram(String s1, String s2) {
 		if (s1.length() != s2.length()) return false;
 		
@@ -37,6 +47,12 @@ public class GroupAnagrams {
 		return source.isEmpty();
 	}
 	
+	/**
+	 * For each word w in the list, check if it is anagram O ((w*w)*n) 
+	 * If it is, put in the correct group 
+	 * @param strs
+	 * @return
+	 */
     public static List<List<String>> groupAnagrams(String[] strs) {
     	HashMap<String, List<String>> group = new HashMap<>();
     	for (String str2 : strs) {
@@ -64,7 +80,13 @@ public class GroupAnagrams {
         return result;
     }	
     
-    
+    /**
+     * To check if a word is an anagram of the other, we can sort it first and use it as key.
+     * Use the key to a group to place the anagram on the correct group if any, if key not exist,
+     * then no group
+     * @param strs
+     * @return
+     */
     public static List<List<String>> groupAnagramsSort(String[] strs) {
     	
     	Map<String, List<String>> map = new HashMap<>();    	

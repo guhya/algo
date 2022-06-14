@@ -5,6 +5,11 @@ import java.util.Set;
 
 public class ContainsDuplicate {
 
+    /**
+     * Set to automatically filter out duplicate values
+     * @param nums
+     * @return
+     */
     public static boolean containsDuplicate(int[] nums) {
     	Set<Integer> numSet = new HashSet<>();
     	for(int i=0; i<nums.length; i++) {

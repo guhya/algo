@@ -59,6 +59,12 @@ public class InsertInterval {
         return result;
     }	
     
+    /**
+     * Interval problem, remember than values in interval a ordered, so check only one of them
+     * @param intervals
+     * @param newInterval
+     * @return
+     */
     public static int[][] insertLinear(int[][] intervals, int[] newInterval) {
     	
     	int i = 0;

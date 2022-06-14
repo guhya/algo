@@ -95,6 +95,12 @@ public class CourseSchedule {
 		return false;
 	}
 
+	/**
+	 * Dependency problem can be solved with topological sorting
+	 * @param numCourses
+	 * @param prerequisites
+	 * @return
+	 */
 	public static boolean isAcyclic(int numCourses, int[][] prerequisites) {
 		ArrayList<Integer>[] g = new ArrayList[numCourses];
 		for (int i=0; i<g.length; i++) {

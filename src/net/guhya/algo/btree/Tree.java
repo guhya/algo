@@ -43,7 +43,7 @@ public class Tree {
 			for (int i=0; i<qSize; i++) {
 				TreeNode node = q.poll();
 				if (node.left != null) {
-					if (key.equals(node.left.val)) {
+					if (key.equals(String.valueOf(node.left.val))) {
 						isFound = true;
 						node.right = null;
 					} else {
@@ -53,7 +53,7 @@ public class Tree {
 				}
 				
 				if (node.right != null) {
-					if (key.equals(node.right.val)) {
+					if (key.equals(String.valueOf(node.right.val))) {
 						s.pop();
 						isFound = true;
 					} else {
@@ -149,7 +149,7 @@ public class Tree {
 	public static void printPath(TreeNode root, String path, String key) {
 		if (root == null) return;
 		
-		if (key.equals(root.val)) {
+		if (key.equals(String.valueOf(root.val))) {
 			System.out.println(path + root.val);
 			return;
 		}
@@ -164,7 +164,7 @@ public class Tree {
 		}
 		
 		s.add(root);
-		if (key.equals(root.val)) {
+		if (key.equals(String.valueOf(root.val))) {
 			return true;
 		}
 		

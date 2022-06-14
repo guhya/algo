@@ -4,6 +4,14 @@ import java.util.Stack;
 
 public class Coupon {
 
+    /**
+     * Use stack to solve this symmetrical operation
+     * If the item hasn't been seen before (match the top of the stack), add to stack.
+     * If item match the top of the stack, pop it.
+     * If in the end stack is empty, we know that the data is symmetrical
+     * @param str
+     * @return
+     */
 	public static boolean isValid(String str) {
 		if (str == null) return false;
 		int len = str.length();

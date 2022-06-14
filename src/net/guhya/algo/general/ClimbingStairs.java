@@ -2,6 +2,12 @@ package net.guhya.algo.general;
 
 public class ClimbingStairs {
 	
+    /**
+     * Brute force with memo
+     * @param n
+     * @param memo
+     * @return
+     */
 	public static int climbStairsUtil(int n, int[] memo) {
 		if (n < 0) return 0;
 		if (n == 0) return 1;

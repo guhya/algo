@@ -2,6 +2,11 @@ package net.guhya.algo.general;
 
 public class Jumbled {
 
+    /**
+     * To generate string variation, brute force it
+     * @param s
+     * @param shuffle
+     */
 	public static void jumble(String s, String shuffle) {
 		if (s.length() == 0) {
 			System.out.println(shuffle);
@@ -22,7 +27,7 @@ public class Jumbled {
 	}
 	
 	public static void main(String[] args) {
-		String s = "ABCD";
+		String s = "ABCDE";
 		jumble(s, "");
 	}
 

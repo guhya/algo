@@ -2,6 +2,13 @@ package net.guhya.algo.general;
 
 public class HouseRobber {
 
+    /**
+     * Brute force with memoization
+     * @param nums
+     * @param idx
+     * @param memo
+     * @return
+     */
     public static int robUtil(int[] nums, int idx, int[] memo) {
     	if (idx >= nums.length) return 0;
     	if (memo[idx] > 0) return memo[idx];

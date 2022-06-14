@@ -12,26 +12,13 @@ public class CloneGraph {
 	public static class Node {
 		public int val;
 		public List<Node> neighbors;
-		
-		public Node() {
-			this.val = 0;
-			this.neighbors = new ArrayList<>();
-		}
-		
 		public Node(int val) {
 			this.val = val;
 			this.neighbors = new ArrayList<>();
 		}
-
-		public Node(int val, List<Node> neighbors) {
-			this.val = 0;
-			this.neighbors = neighbors;
-		}
-		
 		public String toString() {
 			return String.valueOf(this.val);
 		}
-		
 	}
 	
 	public static void traverse(Node node) {
@@ -57,6 +44,14 @@ public class CloneGraph {
 		System.out.println(s);
 	}
 	
+	/**
+	 * To clone a graph, do a BFS on old graph. Meanwhile we put newly created node at map
+	 * for getting a reference later.
+	 * Everytime we encounter a new node in the neighbor list, crate a node and put in the map.
+	 * If we encounter visited node, get the node from the map.
+	 * @param node
+	 * @return
+	 */
     public static Node cloneGraph(Node node) {
         Node newNode = new Node(node.val);
 		HashMap<Integer, Node> visited = new HashMap<>();

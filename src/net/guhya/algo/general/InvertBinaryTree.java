@@ -14,6 +14,11 @@ public class InvertBinaryTree {
 		}
 	}
 
+	/**
+	 * Operation on the tree is done to the subtree
+	 * @param root
+	 * @return
+	 */
     public static TreeNode invertTree(TreeNode root) {
     	if (root == null) return root;
     	TreeNode tmp = root.left;

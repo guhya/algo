@@ -5,6 +5,14 @@ import java.util.Map;
 
 public class DecodeWays {
 
+    /**
+     * Brute force with memo
+     * @param s
+     * @param sub
+     * @param path
+     * @param memo
+     * @return
+     */
     public static int numDecodingsUtil(String s, String sub, String path, Map<String, Integer> memo) {
     	if (sub.length() > 0) {
 	    	path += sub + ",";
@@ -49,7 +57,6 @@ public class DecodeWays {
 	
 	
 	public static void main(String[] args) {
-		/*
 		System.out.println(numDecodings("11106"));
 		System.out.println("+++++++++++");
 		System.out.println(numDecodings("12"));
@@ -58,7 +65,6 @@ public class DecodeWays {
 		System.out.println("+++++++++++");
 		System.out.println(numDecodings("111111111111111111111111111111111111111111111"));
 		System.out.println("+++++++++++");
-		*/
 		System.out.println(numDecodings("123123"));
 	}
 

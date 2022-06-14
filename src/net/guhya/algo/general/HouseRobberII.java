@@ -17,6 +17,11 @@ public class HouseRobberII {
     }
 	
 	
+    /**
+     * Brute force with memoization, just do it twice
+     * @param nums
+     * @return
+     */
     public static int rob(int[] nums) {
     	int[] memo = new int[nums.length];
     	Arrays.fill(memo, -1);

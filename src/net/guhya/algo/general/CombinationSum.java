@@ -28,6 +28,9 @@ public class CombinationSum {
 	public static void main(String[] args) {
 		int[] candidates = {2,3,6,7};
 		int target = 7;
-		combinationSum(candidates, target);
+		List<List<Integer>> result = combinationSum(candidates, target);
+		for (List<Integer> r : result) {
+		    System.out.println(r);
+		}
 	}
 }
