@@ -8,19 +8,19 @@ public class ConstructFromPreorderRecursive {
 	public static TreeNode construct(int[] arr, int l, int h, TreeNode root) {
 		
 		if (root == null) {
-			root = new TreeNode(String.valueOf(arr[l]));
+			root = new TreeNode(arr[l]);
 		} 
 		
 		int i = findMax(arr, l, h);
 		
 		if (i !=-1 && i != l+1) {
 			l++;
-			root.left = new TreeNode(String.valueOf(arr[l]));
+			root.left = new TreeNode(arr[l]);
 			construct(arr, l, i-1, root.left);
 		}
 		
 		if (i > l) {
-			root.right = new TreeNode(String.valueOf(arr[i]));
+			root.right = new TreeNode(arr[i]);
 			construct(arr, i, h, root.right);
 		}
 		

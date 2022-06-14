@@ -201,7 +201,7 @@ public class TheList {
 		}
 		
 		Node mid = findMid(head, tail);
-		TreeNode node = new TreeNode(String.valueOf(mid.data));
+		TreeNode node = new TreeNode(mid.data);
 		
 		Node leftHead = head;
 		Node leftTail = findBeforeTail(head, mid);

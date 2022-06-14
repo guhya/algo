@@ -43,7 +43,7 @@ public class Tree {
 			for (int i=0; i<qSize; i++) {
 				TreeNode node = q.poll();
 				if (node.left != null) {
-					if (key.equals(node.left.data)) {
+					if (key.equals(node.left.val)) {
 						isFound = true;
 						node.right = null;
 					} else {
@@ -53,7 +53,7 @@ public class Tree {
 				}
 				
 				if (node.right != null) {
-					if (key.equals(node.right.data)) {
+					if (key.equals(node.right.val)) {
 						s.pop();
 						isFound = true;
 					} else {
@@ -98,24 +98,24 @@ public class Tree {
 		int actualElementCount = (int) Math.pow(2, treeHeight) - 1;
 		
 		TreeNode[] nodes = new TreeNode[actualElementCount];
-		Map<String, Integer> indexMap = new HashMap<>();
+		Map<Integer, Integer> indexMap = new HashMap<>();
 		Queue<TreeNode> q = new LinkedList<>();
 		q.add(root);
-		indexMap.put(root.data, 0);
+		indexMap.put(root.val, 0);
 		nodes[0] = root;
 		while (!q.isEmpty()) {
 			TreeNode n = q.poll();
-			int idx = indexMap.get(n.data);
+			int idx = indexMap.get(n.val);
 			if (n.left != null) {
 				q.add(n.left);
 				nodes[2*idx+1] = n.left;
-				indexMap.put(n.left.data, 2*idx+1);
+				indexMap.put(n.left.val, 2*idx+1);
 			}
 			
 			if (n.right != null) {
 				q.add(n.right);
 				nodes[2*idx+2] = n.right;
-				indexMap.put(n.right.data, 2*idx+2);
+				indexMap.put(n.right.val, 2*idx+2);
 			}
 		}
 		
@@ -142,20 +142,20 @@ public class Tree {
 			return;
 		}
 		
-		printLeavePath(root.left, path + " " + root.data);
-		printLeavePath(root.right, path + " " + root.data);
+		printLeavePath(root.left, path + " " + root.val);
+		printLeavePath(root.right, path + " " + root.val);
 	}
 	
 	public static void printPath(TreeNode root, String path, String key) {
 		if (root == null) return;
 		
-		if (key.equals(root.data)) {
-			System.out.println(path + root.data);
+		if (key.equals(root.val)) {
+			System.out.println(path + root.val);
 			return;
 		}
 		
-		printPath(root.left, path + root.data + "->", key);
-		printPath(root.right, path + root.data + "->", key);
+		printPath(root.left, path + root.val + "->", key);
+		printPath(root.right, path + root.val + "->", key);
 	}
 	
 	public static boolean isTherePath(TreeNode root, String key, Stack<TreeNode> s) {
@@ -164,7 +164,7 @@ public class Tree {
 		}
 		
 		s.add(root);
-		if (key.equals(root.data)) {
+		if (key.equals(root.val)) {
 			return true;
 		}
 		
@@ -179,25 +179,25 @@ public class Tree {
 	public static void inorder(TreeNode root) {
 		if (root == null) return;
 		
-		System.out.print(root.data + ", ");
+		System.out.print(root.val + ", ");
 		inorder(root.left);
 		inorder(root.right);
 	}
 	
 	public static void main(String[] args) {
-		TreeNode tree = new TreeNode("1");
-		tree.left = new TreeNode("2");
-		tree.right = new TreeNode("3");
-		tree.left.left = new TreeNode("4");
-		tree.left.right = new TreeNode("5");
-		tree.right.left = new TreeNode("6");
-		tree.right.right = new TreeNode("7");
-		tree.left.left.left = new TreeNode("8");
-		tree.left.left.right = new TreeNode("28");
-		tree.left.right.left = new TreeNode("9");
-		tree.left.right.right = new TreeNode("10");
-		tree.right.left.left = new TreeNode("11");
-		tree.right.right.left = new TreeNode("12");
+		TreeNode tree = new TreeNode(1);
+		tree.left = new TreeNode(2);
+		tree.right = new TreeNode(3);
+		tree.left.left = new TreeNode(4);
+		tree.left.right = new TreeNode(5);
+		tree.right.left = new TreeNode(6);
+		tree.right.right = new TreeNode(7);
+		tree.left.left.left = new TreeNode(8);
+		tree.left.left.right = new TreeNode(28);
+		tree.left.right.left = new TreeNode(9);
+		tree.left.right.right = new TreeNode(10);
+		tree.right.left.left = new TreeNode(11);
+		tree.right.right.left = new TreeNode(12);
 		
 		generateLevel(tree);
 		
@@ -205,11 +205,11 @@ public class Tree {
 		System.out.println("++++++++++");
 		printCousin(tree, "9");
 		System.out.println("++++++++++");
-		TreeNode tree2 = new TreeNode("1");
-		tree2.left = new TreeNode("2");
-		tree2.right = new TreeNode("3");
-		tree2.left.left = new TreeNode("4");
-		tree2.left.right = new TreeNode("5");
+		TreeNode tree2 = new TreeNode(1);
+		tree2.left = new TreeNode(2);
+		tree2.right = new TreeNode(3);
+		tree2.left.left = new TreeNode(4);
+		tree2.left.right = new TreeNode(5);
 		printLeavePath(tree2, "");
 		System.out.println("++++++++++");
 		printPath(tree2, "", "5");
