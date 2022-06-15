@@ -36,5 +36,8 @@ public class Test {
     	list.add(1);
     	list.add(9);
     	System.out.println(minDiff(list));
+    	
+    	System.out.println("++++++++++");
+    	System.out.println(121 / (int) Math.pow(10, 0-0) % 10);
     }
 }
