@@ -84,6 +84,12 @@ public class GroupAnagrams {
      * To check if a word is an anagram of the other, we can sort it first and use it as key.
      * Use the key to a group to place the anagram on the correct group if any, if key not exist,
      * then no group
+     * 
+     * Use hashmap to store group
+     * Key is a sorted word
+     * Value is list of anagrams
+     * 
+     * Sort anagram, if it is equals to key, add it if not create it
      * @param strs
      * @return
      */

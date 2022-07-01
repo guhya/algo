@@ -5,6 +5,12 @@ import java.util.Map;
 
 public class LongestConsecutiveSequence {
 
+    /**
+     * This will find longest sequence of number ex (1, 2, 3) in any array of integer with random
+     * order. ex (4, 2, 1, 44)
+     * @param nums
+     * @return
+     */
     public static int longestConsecutive(int[] nums) {
     	int result = 0;
     	

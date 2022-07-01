@@ -2,7 +2,16 @@ package net.guhya.algo.general;
 
 public class SearchInRotatedSortedArray {
 
-	
+	/**
+	 * Binary search
+	 * To get middle value, we do a modulo operation on original mid value and rotation value
+	 * @param nums
+	 * @param target
+	 * @param lo
+	 * @param hi
+	 * @param rotate
+	 * @return
+	 */
 	public static int searchUtil(int[] nums, int target, int lo, int hi, int rotate) {
 		int mid = (lo + hi) / 2;
 		if (lo > hi) return -1;
@@ -18,6 +27,12 @@ public class SearchInRotatedSortedArray {
 		return Math.max(left, right);
 	}
 	
+	/**
+	 * Check how many rotation is done to the array
+	 * @param nums
+	 * @param target
+	 * @return
+	 */
 	public static int search(int[] nums, int target) {
 		if (nums.length == 0) return -1;
 		if (nums.length == 1) {

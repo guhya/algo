@@ -79,6 +79,7 @@ public class Palindrome {
 	public static void main(String[] args) {
 		String s = "aabcd";
 		System.out.println(dpLongestPalindrome(s));
+        System.out.println(longestPalindrome(s));
 	}
 
 }

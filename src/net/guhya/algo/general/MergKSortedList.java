@@ -16,6 +16,18 @@ public class MergKSortedList {
 		traverse(head.next);
 	}
 	
+	/**
+	 * Get total length of the list inside
+	 * Create dummy head list
+	 * Iterate until all nodes are processed
+	 *     From first inner list until the last one by one check if it is null (already empty)
+	 *     If it is null ,move on to the next inner list
+	 *     When we found non empty list,
+	 *     
+	 *     
+	 * @param lists
+	 * @return
+	 */
     public static ListNode mergeKLists(ListNode[] lists) {
     	int l = 0;
     	for (ListNode list : lists) {
